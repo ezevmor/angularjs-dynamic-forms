@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div ng-app="angularTest">
+        <div ng-controller="AngularTestController as vm">
+            <!--this is a standard form-->
+            <form name="vm.testForm" ng-submit="vm.submit(vm.testForm)" novalidate>
+                <input type="text" name="i_1" ng-model="vm.testForm.data.i_1" required>
+                <input type="text" name="i_2" ng-model="vm.testForm.data.i_2" required>
+                <br>
+                <input type="radio" name="r_1" ng-model="vm.testForm.data.radio" value="one">
+                <input type="radio" name="r_2" ng-model="vm.testForm.data.radio" value="two">
+                <input type="radio" name="r_3" ng-model="vm.testForm.data.radio" value="tree">
+                <br>
+                <button type="submit" ng-disabled="!vm.testForm.$valid">submit</button>
+            </form>
+            <br>
+            <br>
+
+            <!--this is a dynamic form-->
+            <form name="vm.dynamicForm" ng-submit="vm.submitDinamic(vm.dynamicForm)">
+                <input ng-repeat="input in vm.inputs" type="text" name="{{input}}" ng-model="vm.dynamicForm.data[input]" required>
+                <input ng-repeat="radio in vm.radios" type="radio" name="{{input}}" ng-model="vm.dynamicForm.data.radio" value="{{radio}}">
+                <button type="submit" ng-disabled="!vm.dynamicForm.$valid">submit</button>
+            </form>
+
+
+            <!--this is a complex dynamic form-->
+            <form name="vm.complexDynamicForm" ng-submit="vm.submitComplexDinamic(vm.complexDynamicForm.data)">
+                <div ng-repeat="block in vm.blocks">
+                    <h3>{{block.description}}</h3>
+                    <div ng-repeat="question in block.questions">
+                        <p>{{question.description}}</p>
+                        <div ng-repeat="answer in question.answers">
+                            <label>{{answer.description}}</label>
+                            <input  type="radio" ng-model="vm.complexDynamicForm.data['b_'+block.id]['q_'+question.id]" value="{{answer.value}}">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">submit</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.14/angular.js"></script>
+    <script src="test.js"></script>
+</body>
+</html>
