@@ -14,9 +14,9 @@
                 <input type="text" name="i_1" ng-model="vm.testForm.data.i_1" required>
                 <input type="text" name="i_2" ng-model="vm.testForm.data.i_2" required>
                 <br>
-                <input type="radio" name="r_1" ng-model="vm.testForm.data.radio" value="one">
-                <input type="radio" name="r_2" ng-model="vm.testForm.data.radio" value="two">
-                <input type="radio" name="r_3" ng-model="vm.testForm.data.radio" value="tree">
+                <input type="radio" name="r_1" ng-model="vm.testForm.data.radio" value="one" ng-required="!vm.testForm.data.radio">
+                <input type="radio" name="r_2" ng-model="vm.testForm.data.radio" value="two" ng-required="!vm.testForm.data.radio">
+                <input type="radio" name="r_3" ng-model="vm.testForm.data.radio" value="tree" ng-required="!vm.testForm.data.radio">
                 <br>
                 <button type="submit" ng-disabled="!vm.testForm.$valid">submit</button>
             </form>
@@ -26,7 +26,7 @@
             <!--this is a dynamic form-->
             <form name="vm.dynamicForm" ng-submit="vm.submitDinamic(vm.dynamicForm)">
                 <input ng-repeat="input in vm.inputs" type="text" name="{{input}}" ng-model="vm.dynamicForm.data[input]" required>
-                <input ng-repeat="radio in vm.radios" type="radio" name="{{input}}" ng-model="vm.dynamicForm.data.radio" value="{{radio}}">
+                <input ng-repeat="radio in vm.radios" type="radio" name="{{input}}" ng-model="vm.dynamicForm.data.radio" value="{{radio}}" ng-required="!vm.dynamicForm.data.radio">
                 <button type="submit" ng-disabled="!vm.dynamicForm.$valid">submit</button>
             </form>
 
@@ -39,11 +39,11 @@
                         <p>{{question.description}}</p>
                         <div ng-repeat="answer in question.answers">
                             <label>{{answer.description}}</label>
-                            <input  type="radio" ng-model="vm.complexDynamicForm.data['b_'+block.id]['q_'+question.id]" value="{{answer.value}}">
+                            <input  type="radio" ng-model="vm.complexDynamicForm.data['b_'+block.id]['q_'+question.id]" value="{{answer.value}}" ng-required="!vm.complexDynamicForm.data['b_'+block.id]['q_'+question.id]">
                         </div>
                     </div>
                 </div>
-                <button type="submit">submit</button>
+                <button type="submit" ng-disabled="!vm.complexDynamicForm.$valid">submit</button>
             </form>
         </div>
     </div>
