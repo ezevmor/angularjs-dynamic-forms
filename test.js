@@ -105,4 +105,12 @@ angular.module('angularTest', [])
         vm.submitComplexDinamic = function(formModel) {
             console.log(formModel);
         }
+    
+        vm.submitNestedForm = function(currentFormIndex, isLastBlock) {
+            if (isLastBlock) {
+                console.log(vm.complexDynamicFormByBlocks.data);
+            } else {
+                vm.complexDynamicFormByBlocks.showSubform = 'subform_' + (currentFormIndex + 1);
+            }
+        }
     })
