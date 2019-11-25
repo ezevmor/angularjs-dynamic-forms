@@ -45,6 +45,32 @@
                 </div>
                 <button type="submit" ng-disabled="!vm.complexDynamicForm.$valid">submit</button>
             </form>
+            
+            
+            <!--this is a complex dynamic form by blocks-->
+            <form name="vm.complexDynamicFormByBlocks">
+                <div ng-repeat="block in vm.blocks">
+                    <ng-form name="subform_{{$index}}" novalidate 
+                        ng-show="vm.complexDynamicFormByBlocks.showSubform === 'subform_'+$index || ($index === 0 && vm.complexDynamicFormByBlocks.showSubform === undefined)">
+                        <h3>{{block.description}}</h3>
+                        <div ng-repeat="question in block.questions">
+                            <p>{{question.description}}</p>
+                            <div ng-repeat="answer in question.answers">
+                                <label for="{{block.id}}_{{question.id}}_{{answer.id}}">{{answer.description}}</label>
+                                <input type="radio"
+                                    id="{{block.id}}_{{question.id}}_{{answer.id}}"
+                                    ng-model="vm.complexDynamicFormByBlocks.data['b_'+block.id]['q_'+question.id]"
+                                    value="{{answer.value}}"
+                                    ng-required="!vm.complexDynamicFormByBlocks.data['b_'+block.id]['q_'+question.id]">
+                            </div>
+                        </div>
+                        <button type="button"  ng-click="vm.submitNestedForm($index, $last)" ng-disabled="!subform_{{$index}}.$valid">
+                            <span ng-if="!$last">next</span>
+                            <span ng-if="$last">send form</span>
+                        </button>
+                    </ng-form>
+                </div>
+            </form>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.14/angular.js"></script>
